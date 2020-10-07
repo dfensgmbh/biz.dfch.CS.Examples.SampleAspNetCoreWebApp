@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "biz.dfch.CS.Examples.SampleAspNetCoreWebApp", "biz.dfch.CS.Examples.SampleAspNetCoreWebApp\biz.dfch.CS.Examples.SampleAspNetCoreWebApp.csproj", "{1153C852-4A1C-443E-AEDE-F93610A52BBD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "biz.dfch.CS.Examples.SampleAspNetCoreWebApp", "biz.dfch.CS.Examples.SampleAspNetCoreWebApp\biz.dfch.CS.Examples.SampleAspNetCoreWebApp.csproj", "{1153C852-4A1C-443E-AEDE-F93610A52BBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "biz.dfch.CS.Examples.SampleAspNetCoreWebAPI", "biz.dfch.CS.Examples.SampleAspNetCoreWebAPI\biz.dfch.CS.Examples.SampleAspNetCoreWebAPI.csproj", "{11D57255-DB57-4736-BFDE-9EC50B741EDD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{1153C852-4A1C-443E-AEDE-F93610A52BBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1153C852-4A1C-443E-AEDE-F93610A52BBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1153C852-4A1C-443E-AEDE-F93610A52BBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11D57255-DB57-4736-BFDE-9EC50B741EDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11D57255-DB57-4736-BFDE-9EC50B741EDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11D57255-DB57-4736-BFDE-9EC50B741EDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11D57255-DB57-4736-BFDE-9EC50B741EDD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
