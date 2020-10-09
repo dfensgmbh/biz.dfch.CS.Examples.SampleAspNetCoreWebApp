@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace biz.dfch.CS.Examples.SampleAspNetCoreWebAPI
+namespace biz.dfch.CS.Examples.SampleAspNetCoreWebApi
 {
     public class Program
     {

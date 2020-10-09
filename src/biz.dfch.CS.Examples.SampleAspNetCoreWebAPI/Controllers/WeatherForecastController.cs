@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace biz.dfch.CS.Examples.SampleAspNetCoreWebAPI.Controllers
+namespace biz.dfch.CS.Examples.SampleAspNetCoreWebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]

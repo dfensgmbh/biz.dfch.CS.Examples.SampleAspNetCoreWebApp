@@ -1,14 +1,17 @@
-using biz.dfch.CS.Examples.SampleAspNetCoreWebAPI.Controllers;
+using System.Linq;
+using biz.dfch.CS.Examples.SampleAspNetCoreWebApi.Data;
+using biz.dfch.CS.Examples.SampleAspNetCoreWebApi.Models;
+using Microsoft.AspNet.OData.Builder;
+using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNet.OData.Extensions;
-using biz.dfch.CS.Examples.SampleAspNetCoreWebAPI.Models;
-using Microsoft.AspNet.OData.Builder;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OData.Edm;
 
-namespace biz.dfch.CS.Examples.SampleAspNetCoreWebAPI
+namespace biz.dfch.CS.Examples.SampleAspNetCoreWebApi
 {
     public class Startup
     {
@@ -19,30 +22,47 @@ namespace biz.dfch.CS.Examples.SampleAspNetCoreWebAPI
 
         public IConfiguration Configuration { get; }
 
+        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ProductsContext>(opt =>
-                opt.UseInMemoryDatabase("Products"));
-
             services.AddControllers(mvcOptions =>
                 mvcOptions.EnableEndpointRouting = false);
-
-            services.AddMvc();
             services.AddOData();
+            services.AddDbContext<MusicContext>(opts => opts.UseInMemoryDatabase("AlbumsDB"));
         }
 
-        public void Configure(IApplicationBuilder app)
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            var builder = new ODataConventionModelBuilder(app.ApplicationServices);
-
-            builder.EntitySet<Product>("Products");
-
-            app.UseMvc(routeBuilder =>
+            if (env.IsDevelopment())
             {
-                routeBuilder.Select().Expand().Filter().OrderBy().MaxTop(100).Count();
-                routeBuilder.MapODataServiceRoute("ODataRoute", "odata", builder.GetEdmModel());
-                routeBuilder.EnableDependencyInjection();
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
             });
+
+            app.UseMvc(p =>
+            {
+                p.Select().Expand().Count().Filter().OrderBy().MaxTop(100).SkipToken().Build();
+                p.MapODataServiceRoute("odata", "odata", GetEdmModel());
+            });
+        }
+
+        private static IEdmModel GetEdmModel()
+        {
+            var builder = new ODataConventionModelBuilder();
+            builder.EntitySet<Album>("Albums");
+            builder.EntitySet<Song>("Songs");
+            return builder.GetEdmModel();
         }
     }
 }

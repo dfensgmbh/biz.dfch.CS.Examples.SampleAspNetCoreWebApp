@@ -1,6 +1,6 @@
 using System;
 
-namespace biz.dfch.CS.Examples.SampleAspNetCoreWebAPI
+namespace biz.dfch.CS.Examples.SampleAspNetCoreWebApi
 {
     public class WeatherForecast
     {
