@@ -1,0 +1,32 @@
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:DataServices>
+    <Schema Namespace="biz.dfch.CS.Examples.SampleAspNetCoreWebApi.Models" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="Album">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" />
+        <NavigationProperty Name="Songs" Type="Collection(biz.dfch.CS.Examples.SampleAspNetCoreWebApi.Models.Song)" />
+      </EntityType>
+      <EntityType Name="Song">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" />
+        <NavigationProperty Name="Album" Type="biz.dfch.CS.Examples.SampleAspNetCoreWebApi.Models.Album" />
+      </EntityType>
+    </Schema>
+    <Schema Namespace="Default" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityContainer Name="Container">
+        <EntitySet Name="Albums" EntityType="biz.dfch.CS.Examples.SampleAspNetCoreWebApi.Models.Album">
+          <NavigationPropertyBinding Path="Songs" Target="Songs" />
+        </EntitySet>
+        <EntitySet Name="Songs" EntityType="biz.dfch.CS.Examples.SampleAspNetCoreWebApi.Models.Song">
+          <NavigationPropertyBinding Path="Album" Target="Albums" />
+        </EntitySet>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

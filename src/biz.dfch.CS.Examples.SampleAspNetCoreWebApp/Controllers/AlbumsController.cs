@@ -1,24 +1,41 @@
-﻿using biz.dfch.CS.Examples.SampleAspNetCoreWebApp.Models;
+﻿using biz.dfch.CS.Examples.SampleAspNetCoreWebApi.Models;
+using Default;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+using System;
+using System.Linq;
 
 namespace biz.dfch.CS.Examples.SampleAspNetCoreWebApp.Controllers
 {
     public class AlbumsController : Controller
     {
+        private Container container;
+
+        public AlbumsController()
+        {
+            container = new Container(new Uri("https://localhost:44316/odata/"));
+        }
+
         public IActionResult Index()
         {
-            var albums = new AlbumViewModel
+            var albums = container.Albums.AddQueryOption("$expand","Songs");
+
+            var viewModel = new Models.AlbumViewModel();
+            viewModel.Albums = albums.ToList();
+
+            return View(viewModel);
+        }
+
+        public IActionResult Create()
+        {
+            var album = new Album
             {
-                Albums = new List<Album>
-            {
-                new Album { Name = "First Album" },
-                new Album { Name = "Second Album" },
-                new Album { Name = "Third Album" }
-            }
+                Name = "MyAlbum"
             };
 
-            return View(albums);
+            container.AddToAlbums(album);
+            container.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
