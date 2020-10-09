@@ -1,8 +1,10 @@
 ﻿using biz.dfch.CS.Examples.SampleAspNetCoreWebApi.Data;
+using biz.dfch.CS.Examples.SampleAspNetCoreWebApi.Models;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Examples.SampleAspNetCoreWebApi.Controllers
 {
@@ -19,14 +21,14 @@ namespace biz.dfch.CS.Examples.SampleAspNetCoreWebApi.Controllers
         }
 
         [EnableQuery]
-        public IActionResult Get()
+        public IActionResult GetAlbums()
         {
             var albums = _context.Albums;
             return Ok(albums);
         }
 
         [EnableQuery]
-        public IActionResult Get(int key)
+        public IActionResult GetAlbum(int key)
         {
             if (!ModelState.IsValid)
             {
@@ -38,6 +40,15 @@ namespace biz.dfch.CS.Examples.SampleAspNetCoreWebApi.Controllers
                 return NotFound();
             }
             return Ok(album);
+        }
+
+        [HttpPost]
+        public Microsoft.AspNet.OData.Results.CreatedODataResult<Album> PostAlbum([FromBody] Album album)
+        {
+            _context.Albums.Add(album);
+            _context.SaveChanges();
+
+            return Created<Album>(album);
         }
     }
 }
