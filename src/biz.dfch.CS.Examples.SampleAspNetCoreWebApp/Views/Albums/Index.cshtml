@@ -1,0 +1,27 @@
+﻿@model biz.dfch.CS.Examples.SampleAspNetCoreWebApp.Models.AlbumViewModel
+
+@{
+    ViewData["Title"] = "Albums";
+}
+
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Albums[0].Name)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Albums)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
