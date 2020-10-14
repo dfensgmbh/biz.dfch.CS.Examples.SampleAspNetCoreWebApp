@@ -4,6 +4,7 @@ using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace biz.dfch.CS.Examples.SampleAspNetCoreWebApi.Controllers
@@ -48,7 +49,58 @@ namespace biz.dfch.CS.Examples.SampleAspNetCoreWebApi.Controllers
             _context.Albums.Add(album);
             _context.SaveChanges();
 
-            return Created<Album>(album);
+            return Created(album);
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteAlbum([FromODataUri] int key)
+        {
+            var album = _context.Albums.Find(key);
+
+            if (album == null)
+            {
+                return NotFound();
+            }
+
+            _context.Remove(album);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
+        [HttpPut]
+        public IActionResult UpdateAlbum([FromODataUri] int key,[FromBody] Album album)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (key != album.Id)
+            {
+                return BadRequest();
+            }
+            _context.Update(album);
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AlbumExists(key))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return Updated(album);
+        }
+
+        private bool AlbumExists(int key)
+        {
+            return _context.Albums.Any(a => a.Id == key);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using biz.dfch.CS.Examples.SampleAspNetCoreWebApi.Models;
 using Default;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OData.Client;
 using System;
 using System.Linq;
 
@@ -35,6 +36,34 @@ namespace biz.dfch.CS.Examples.SampleAspNetCoreWebApp.Controllers
             container.AddToAlbums(album);
             container.SaveChanges();
 
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Delete(int key)
+        {
+            var album = container.Albums.Where(a => a.Id == key).Single();
+
+            container.DeleteObject(album);
+            container.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Edit(int? key)
+        {
+            var album = container.Albums.Where(a => a.Id == key).Single();
+
+            return View(album);
+        }
+
+        public IActionResult EditAlbum(Album album)
+        {
+            var containerAlbum = container.Albums.Where(a => a.Id == album.Id).Single();
+
+            containerAlbum.Name = album.Name;
+            container.UpdateObject(containerAlbum);
+            container.SaveChanges(SaveChangesOptions.ReplaceOnUpdate);    
+            
             return RedirectToAction(nameof(Index));
         }
     }
